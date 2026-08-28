@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+<title>与 Liz GC（AI 助手）交互 | Rancher &amp; Kubernetes AI  latest</title>
+    <link rel="prev" href="how-to-admin.html">
+    <link rel="next" href="../reference/installation.html">
+    <meta name="description" content="了解如何使用 Liz GC：Rancher &amp; Kubernetes AI 助手 中的 AI 助手 Liz GC，管理工作负载和对资源进行故障排除。">
+    <meta name="generator" content="Antora 3.1.10">
+    <link rel="stylesheet" href="../../../../_/css/site.css">
+<meta http-equiv="last-modified" content="2026-08-26"/>
+<link rel="stylesheet" href="../../../../_/css/search.css">
+<link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="../../../../_/css/font-styles.css">
+<link rel="stylesheet" href="../../../../_/fonts/css/all.css">
+<link rel="stylesheet" href="../../../../_/css/site-extra.css">
+<link rel="stylesheet" href="../../../../_/css/vendor/tabs.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&display=swap&family=SUSE+Mono:ital,wght@0,100..800;1,100..800" rel="stylesheet">
+<link rel="stylesheet" href="../../../../_/css/vendor/light.css">
+<script src="/docserv/res/lightheaded/analytics.js" type="text/javascript"></script>
+<script type="module">
+  import { defineCustomElements, setAssetPath } from 'https://d12w0ryu9hjsx8.cloudfront.net/shared-header/1.10/shared-header.esm.js';
+  defineCustomElements();
+  setAssetPath("https://d12w0ryu9hjsx8.cloudfront.net/shared-header/1.10/assets");
+</script>
+<!-- Default English link -->
+<link href="https://cnrancher.github.io/docs-liz-gc/rancher-ai-gc/latest/en/how-tos/how-to-user.html" hreflang="x-default" rel="alternate"/>
+<!-- Link for the currently processed page -->
+<link href="https://cnrancher.github.io/docs-liz-gc/rancher-ai-gc/latest/zh/how-tos/how-to-user.html" hrefLang="zh-CN" rel="alternate" />
+
+<!-- JSON-LD for doc metadata -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "name": "与 Liz GC（AI 助手）交互 | Liz GC: The Rancher &amp; Kubernetes AI Assistant latest",
+  "headline": "与 Liz GC（AI 助手）交互",
+  "description": "了解如何使用 Liz GC：Rancher &amp;amp; Kubernetes AI 助手 中的 AI 助手 Liz GC，管理工作负载和对资源进行故障排除。",
+  "inLanguage": "zh_CN",
+  "dateModified": "2026-08-26T00:00:00Z",
+  "author": {
+    "@type": "Organization",
+    "name": "SUSE Product & Solution Documentation Team",
+    "url": "https://documentation.suse.com"
+  },
+  "mentions": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "Liz GC: The Rancher &amp; Kubernetes AI Assistant",
+      "softwareVersion": "latest",
+      "applicationCategory": "Cloud Infrastructure",
+      "operatingSystem": "Linux"
+    }
+  ],
+  "publisher": {
+    "@type": "Organization",
+    "name": "SUSE",
+    "url": "https://documentation.suse.com",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.suse.com/assets/img/suse-white-logo-green.svg"
+    }
+  }
+}
+</script>
+<!-- end JSON-LD for doc metadata -->
+
+<!-- SUVA - Begin Ask Geeko-->
+<!--
+searchUnifyChatbot ("Ask Geeko") Copyright ©2024 Grazitti Interactive - All Rights Reserved. NOTICE: All information contained herein is, and remains the property of Grazitti Interactive and its suppliers, if any. The intellectual and technical concepts contained herein are proprietary to Grazitti Interactive and its suppliers and may be covered by India, U.S. and Foreign Patents, patents in process, and are protected by trade secret or copyright law. Dissemination of this information or reproduction of this material is strictly forbidden unless prior written permission is obtained from Grazitti Interactive.
+-->
+<meta content="width=device-width, initial-scale=1.0, user-scalable=yes" name="viewport"/>
+<script type="text/javascript" src="https://suse.searchunify.com/suva-resources/suva_clients_custom/c485cb3c-93d4-4942-99e8-91f3b8ca5636/Allow/an.js?c485cb3c-93d4-4942-99e8-91f3b8ca5636"></script>
+<script type="text/javascript" src="https://suse.searchunify.com/suva-resources/suva_clients_custom/c485cb3c-93d4-4942-99e8-91f3b8ca5636/js/index.js?q=gAAAAABp3JBN9VuEJTi5tFafLIMwgMkCPdJS3Qm56lSYx93ir3Twt9hgSvd3OHEt6-nYfSbY3yHq0Zv8PRPsSy4nbqZiaJ4cZvRc6ItVZdvwz9Urf35cH6OUyPOwdA0phlS-zVIznQ2rWW438p-91NlTHuxJuOFpnA=="></script>
+<link rel="stylesheet" href="https://suse.searchunify.com/suva-resources/suva_clients_custom/c485cb3c-93d4-4942-99e8-91f3b8ca5636/css/index.css">
+<div id="searchUnifyChatbot"></div>
+<!-- SUVA - End Ask Geeko-->
+<!--BEGIN QUALTRICS WEBSITE FEEDBACK SNIPPET-->
+<script type='text/javascript' src="../../../../_/js/qualtrics.js" defer></script>
+<!--END QUALTRICS WEBSITE FEEDBACK SNIPPET-->
+    <script>var uiRootPath = '../../../../_'</script>
+  </head>
+  <body class="article">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs'; mermaid.initialize({"startOnLoad":true});</script><shared-header
+language="en"
+languages='{
+    "en": { "label": "English", "url": "https://documentation.suse.com/en-us/" },
+    "de": { "label": "Deutsch", "url": "https://documentation.suse.com/de-de/" },
+    "fr": { "label": "Français", "url": "https://documentation.suse.com/fr-fr/" },
+    "es": { "label": "Español", "url": "https://documentation.suse.com/es-es/" },
+    "zh_CN": { "label": "中文", "url": "https://documentation.suse.com/zh-cn/" },
+    "pt_BR": { "label": "Português Brasileiro", "url": "https://documentation.suse.com/pt-br/" }
+}'
+enable-search='false'>
+</shared-header>
+<div class="body">
+<div class="nav-container" data-component="rancher-ai-gc" data-version="latest">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title">Rancher &amp; Kubernetes AI</h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../introduction.html">简介</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../quick-start.html">快速入门</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Toggle expand/collapse"></button>
+    <span class="nav-text">解释和概念</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../explanations/architecture.html">整体架构</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../explanations/models.html">LLM模型</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../explanations/shared-data.html">数据使用</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Toggle expand/collapse"></button>
+    <span class="nav-text">操作指南</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="how-to-admin.html">管理员操作指南</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="how-to-user.html">用户操作指南</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Toggle expand/collapse"></button>
+    <span class="nav-text">参考手册</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../reference/installation.html">安装指南</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../reference/troubleshooting.html">故障排查</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Rancher &amp; Kubernetes AI</span>
+    <span class="version">latest</span>
+  </div>
+  <ul class="components">
+        <li class="component is-current">
+          <div class="title"><a href="../introduction.html">Rancher & Kubernetes AI</a></div>
+          <ul class="versions">
+            <li class="version is-current is-latest">
+              <a href="../introduction.html">latest</a>
+            </li>
+          </ul>
+        </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+<ul>
+    <li>
+  <a class="home-link-dsc" href="https://cnrancher.github.io" title="SUSE Documentation Home" aria-label="SUSE Documentation Home"></a>
+    </li>
+    <li>
+      <a href="https://cnrancher.github.io/docs-liz-gc/rancher-ai-gc" title="Liz GC: The Rancher &amp; Kubernetes AI Assistant" aria-label="SUSE Documentation - Liz GC: The Rancher &amp; Kubernetes AI Assistant">
+        Liz GC: The Rancher &amp; Kubernetes AI Assistant
+      </a>
+    </li>
+      <li>
+          操作指南
+      </li>
+  </ul>
+</nav>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <label class="visual-search-label-bc" for="search-input">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+          <input label="Search" aria-label="Search" id="search-input" type="text" placeholder="搜索文档" >
+          <label class="filter checkbox" style="display: none">
+            <input type="checkbox" data-facet-filter="component:rancher-ai-gc" checked> Only this project
+          </label>
+        </div>
+      </div>
+</div>
+  <div class="content">
+<aside
+  class="toc sidebar"
+  data-title="在此页面上" data-levels="2">
+  <div class="toc-menu">
+    <div class="docsurvey-wrapper"><a class="survey-link" href="https://suselinux.fra1.qualtrics.com/jfe/form/SV_diCzHC9xxyJyuN0">Documentation survey</a></div>
+    <!-- start qualtrics -->
+    <div id='ZN_8qZUmklKYbBqAYe'><!--DO NOT REMOVE-CONTENTS PLACED HERE--></div>
+    <div id="qualtrics_container"></div>
+    <!-- end qualtrics -->
+  </div>
+</aside>
+
+<aside class="toc sidebar docsurvey-sidebar">
+  <div class="toc-menu">
+    <div class="docsurvey-wrapper"><a class="survey-link" href="https://suselinux.fra1.qualtrics.com/jfe/form/SV_diCzHC9xxyJyuN0">Documentation survey</a></div>
+  </div>
+</aside>
+<article class="doc">
+<h1 class="page">与 Liz GC（AI 助手）交互</h1>
+<div class="sect1">
+<h2 id="getting-started"><a class="anchor" href="#getting-started"></a>开始使用 Liz GC</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Liz GC 包含一个常驻的 AI 助手 <strong>Liz GC</strong>。 您可以随时在 UI 中点击 <strong>Liz GC 图标</strong> <span class="image"><img src="../_images/how-to-user/liz-button.png" alt="Liz GC 图标" width="48"></span> 打开助手。</p>
+</div>
+<div class="paragraph">
+<p>打开侧边栏后，Liz GC 会显示欢迎消息，其中包含使用提示、简短的新闻资讯以及帮助您快速开始使用的建议列表（请参考 <a href="how-to-admin.html#ui-tools" class="xref page">ui-tools</a> 部分）。</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="../_images/how-to-user/chat-panel.png" alt="Liz GC 聊天面板" width="50%">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="context-aware"><a class="anchor" href="#context-aware"></a>上下文感知</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Liz GC 可以准确理解您当前正在查看的内容。任何带有状态标记的资源都会显示 <strong>Ask Liz GC</strong> 按钮。</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>点击资源旁边的 <strong>Ask Liz GC 滑动按钮图标</strong>。<span class="image"><img src="../_images/how-to-user/ask-liz.png" alt="Ask Liz GC 图标"></span></p>
+</li>
+<li>
+<p>侧边栏将打开，并自动针对该资源生成相应的提示词。</p>
+</li>
+<li>
+<p>Liz GC 会自动获取资源名称、集群 ID 和命名空间，从而提供准确的帮助。</p>
+</li>
+</ol>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="../_images/how-to-user/context.png" alt="Liz GC 上下文界面显示集群和命名空间感知能力。">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="user-approve"><a class="anchor" href="#user-approve"></a>审批操作</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>安全是首要考虑因素。</p>
+</div>
+<div class="paragraph">
+<p>如果您要求 Liz GC 或其某个专用 Agent 修改您的环境（例如更新 Deployment 或更改集群配置），Liz GC 会显示审批提示。</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="../_images/how-to-user/approve.png" alt="环境修改确认对话框。" width="50%">
+</div>
+</div>
+<div class="paragraph">
+<p>您必须点击 <strong>Approve</strong> 按钮 ，系统才能应用任何更改。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="managing-conversations"><a class="anchor" href="#managing-conversations"></a>管理对话</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>您可以同时进行多个线程操作，也可以保存历史记录以供日后参考。</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>创建新聊天:</strong> 要开始新的会话，请点 <strong>New Chat</strong> 图标。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="../_images/how-to-user/conversation.png" alt="New Chat 图标" width="50%"></span></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>复制历史记录:</strong> 要保存你的会话记录，请点击页面右上角的复制按钮。复制后，可以粘贴内容到文本保存。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="../_images/how-to-user/copy.png" alt="复制按钮" width="50%"></span></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="manual-agent-selection"><a class="anchor" href="#manual-agent-selection"></a>切换 Agents</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>默认情况下，Liz GC 使用 "智能路由"（Smart Routing）将您的请求发送给最合适的专用 Agent（例如，针对漏洞问题使用 Security Agent）。</p>
+</div>
+<div class="paragraph">
+<p>如果您希望手动选择特定的 Agent：</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>点击 <strong>Agent Selection</strong> 图标.</p>
+<div class="paragraph">
+<p><span class="image"><img src="../_images/how-to-user/multi-agent-selection.png" alt="Agent 选择按钮" width="50%"></span></p>
+</div>
+</li>
+<li>
+<p>从列表中选择所需的 Agent。</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="prompt-examples"><a class="anchor" href="#prompt-examples"></a>示例提示词</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>不知道从哪里开始？不妨问问 Liz GC 这些问题：</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 50%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">类别</th>
+<th class="tableblock halign-left valign-top">用户提示词</th>
+<th class="tableblock halign-left valign-top">处理 Agent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>安全性</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"我运行中的工作负载中，哪些受到漏洞影响？"</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Security Agent</strong>（获取 CVE 和扫描数据）</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>资源清</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"列出我所有集群中使用的所有注册表。"</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Rancher Agent</strong> （查询集群范围的资源）</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>容量</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"显示内存消耗最多的前 5 个 Pod。"</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Rancher Agent</strong> （查询资源使用情况数据）</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>导航</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"这个状态是什么意思？"</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Context Logic</strong>（根据 UI 中的资源状态进行解释）</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>故障排除</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"应用运行缓慢，请找出根本原因。"</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>SUSE Observability Agent</strong> （分析指标和日志）</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>技能提升</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"如何在 Rancher 中安装 Helm Chart？"</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">*Knowledge *（提供文档来源）</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>集群置备</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">"分析集群并排查其中存在的问题。"</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Rancher-Provisioning Agent</strong> （检查基础设施运行状况）</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="how-to-admin.html">管理员操作指南</a></span>
+  <span class="next"><a href="../reference/installation.html">安装指南</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<script src="../../../../_/js/site.js"></script>
+<script async src="../../../../_/js/vendor/highlight.js"></script>
+<script src="../../../../_/js/vendor/lunr.js"></script>
+<script src="../../../../_/js/vendor/lunr-languages.js"></script>
+<script src="../../../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../../../.." data-snippet-length="100" data-stylesheet="../../../../_/css/search.css"></script>
+<script async src="../../../../search-index.js"></script>
+<script src="../../../../_/js/vendor/langSelection.js"></script>
+<script async src="../../../../_/js/vendor/tabs.js"></script>
+
+
+<script src="../../../../_/js/CNLanguageSwitcher.js"></script>
+  </body>
+</html>

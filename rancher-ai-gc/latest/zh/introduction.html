@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+<title>认识 Liz GC：Rancher &amp; Kubernetes AI 助手 | Rancher &amp; Kubernetes AI  latest</title>
+    <link rel="next" href="quick-start.html">
+    <meta name="description" content="介绍 Liz GC：Rancher &amp; Kubernetes AI 助手，这是一个SUSE® Rancher Prime产品。">
+    <meta name="generator" content="Antora 3.1.10">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+<meta http-equiv="last-modified" content="2026-08-23"/>
+<link rel="stylesheet" href="../../../_/css/search.css">
+<link rel="icon" href="../../../_/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="../../../_/css/font-styles.css">
+<link rel="stylesheet" href="../../../_/fonts/css/all.css">
+<link rel="stylesheet" href="../../../_/css/site-extra.css">
+<link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&display=swap&family=SUSE+Mono:ital,wght@0,100..800;1,100..800" rel="stylesheet">
+<link rel="stylesheet" href="../../../_/css/vendor/light.css">
+<script src="/docserv/res/lightheaded/analytics.js" type="text/javascript"></script>
+<script type="module">
+  import { defineCustomElements, setAssetPath } from 'https://d12w0ryu9hjsx8.cloudfront.net/shared-header/1.10/shared-header.esm.js';
+  defineCustomElements();
+  setAssetPath("https://d12w0ryu9hjsx8.cloudfront.net/shared-header/1.10/assets");
+</script>
+<!-- Default English link -->
+<link href="https://cnrancher.github.io/docs-liz-gc/rancher-ai-gc/latest/en/introduction.html" hreflang="x-default" rel="alternate"/>
+<!-- Link for the currently processed page -->
+<link href="https://cnrancher.github.io/docs-liz-gc/rancher-ai-gc/latest/zh/introduction.html" hrefLang="zh-CN" rel="alternate" />
+
+<!-- JSON-LD for doc metadata -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "name": "认识 Liz GC：Rancher &amp;amp; Kubernetes AI 助手 | Liz GC: The Rancher &amp; Kubernetes AI Assistant latest",
+  "headline": "认识 Liz GC：Rancher &amp;amp; Kubernetes AI 助手",
+  "description": "介绍 Liz GC：Rancher &amp;amp; Kubernetes AI 助手，这是一个SUSE® Rancher Prime产品。",
+  "inLanguage": "zh_CN",
+  "dateModified": "2026-08-23T00:00:00Z",
+  "author": {
+    "@type": "Organization",
+    "name": "SUSE Product & Solution Documentation Team",
+    "url": "https://documentation.suse.com"
+  },
+  "mentions": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "Liz GC: The Rancher &amp; Kubernetes AI Assistant",
+      "softwareVersion": "latest",
+      "applicationCategory": "Cloud Infrastructure",
+      "operatingSystem": "Linux"
+    }
+  ],
+  "publisher": {
+    "@type": "Organization",
+    "name": "SUSE",
+    "url": "https://documentation.suse.com",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.suse.com/assets/img/suse-white-logo-green.svg"
+    }
+  }
+}
+</script>
+<!-- end JSON-LD for doc metadata -->
+
+<!-- SUVA - Begin Ask Geeko-->
+<!--
+searchUnifyChatbot ("Ask Geeko") Copyright ©2024 Grazitti Interactive - All Rights Reserved. NOTICE: All information contained herein is, and remains the property of Grazitti Interactive and its suppliers, if any. The intellectual and technical concepts contained herein are proprietary to Grazitti Interactive and its suppliers and may be covered by India, U.S. and Foreign Patents, patents in process, and are protected by trade secret or copyright law. Dissemination of this information or reproduction of this material is strictly forbidden unless prior written permission is obtained from Grazitti Interactive.
+-->
+<meta content="width=device-width, initial-scale=1.0, user-scalable=yes" name="viewport"/>
+<script type="text/javascript" src="https://suse.searchunify.com/suva-resources/suva_clients_custom/c485cb3c-93d4-4942-99e8-91f3b8ca5636/Allow/an.js?c485cb3c-93d4-4942-99e8-91f3b8ca5636"></script>
+<script type="text/javascript" src="https://suse.searchunify.com/suva-resources/suva_clients_custom/c485cb3c-93d4-4942-99e8-91f3b8ca5636/js/index.js?q=gAAAAABp3JBN9VuEJTi5tFafLIMwgMkCPdJS3Qm56lSYx93ir3Twt9hgSvd3OHEt6-nYfSbY3yHq0Zv8PRPsSy4nbqZiaJ4cZvRc6ItVZdvwz9Urf35cH6OUyPOwdA0phlS-zVIznQ2rWW438p-91NlTHuxJuOFpnA=="></script>
+<link rel="stylesheet" href="https://suse.searchunify.com/suva-resources/suva_clients_custom/c485cb3c-93d4-4942-99e8-91f3b8ca5636/css/index.css">
+<div id="searchUnifyChatbot"></div>
+<!-- SUVA - End Ask Geeko-->
+<!--BEGIN QUALTRICS WEBSITE FEEDBACK SNIPPET-->
+<script type='text/javascript' src="../../../_/js/qualtrics.js" defer></script>
+<!--END QUALTRICS WEBSITE FEEDBACK SNIPPET-->
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs'; mermaid.initialize({"startOnLoad":true});</script><shared-header
+language="en"
+languages='{
+    "en": { "label": "English", "url": "https://documentation.suse.com/en-us/" },
+    "de": { "label": "Deutsch", "url": "https://documentation.suse.com/de-de/" },
+    "fr": { "label": "Français", "url": "https://documentation.suse.com/fr-fr/" },
+    "es": { "label": "Español", "url": "https://documentation.suse.com/es-es/" },
+    "zh_CN": { "label": "中文", "url": "https://documentation.suse.com/zh-cn/" },
+    "pt_BR": { "label": "Português Brasileiro", "url": "https://documentation.suse.com/pt-br/" }
+}'
+enable-search='false'>
+</shared-header>
+<div class="body">
+<div class="nav-container" data-component="rancher-ai-gc" data-version="latest">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title">Rancher &amp; Kubernetes AI</h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="introduction.html">简介</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="quick-start.html">快速入门</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Toggle expand/collapse"></button>
+    <span class="nav-text">解释和概念</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="explanations/architecture.html">整体架构</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="explanations/models.html">LLM模型</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="explanations/shared-data.html">数据使用</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Toggle expand/collapse"></button>
+    <span class="nav-text">操作指南</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="how-tos/how-to-admin.html">管理员操作指南</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="how-tos/how-to-user.html">用户操作指南</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Toggle expand/collapse"></button>
+    <span class="nav-text">参考手册</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="reference/installation.html">安装指南</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="reference/troubleshooting.html">故障排查</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Rancher &amp; Kubernetes AI</span>
+    <span class="version">latest</span>
+  </div>
+  <ul class="components">
+        <li class="component is-current">
+          <div class="title"><a href="introduction.html">Rancher & Kubernetes AI</a></div>
+          <ul class="versions">
+            <li class="version is-current is-latest">
+              <a href="introduction.html">latest</a>
+            </li>
+          </ul>
+        </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+<ul>
+    <li>
+  <a class="home-link-dsc" href="https://cnrancher.github.io" title="SUSE Documentation Home" aria-label="SUSE Documentation Home"></a>
+    </li>
+    <li>
+      <a href="https://cnrancher.github.io/docs-liz-gc/rancher-ai-gc" title="Liz GC: The Rancher &amp; Kubernetes AI Assistant" aria-label="SUSE Documentation - Liz GC: The Rancher &amp; Kubernetes AI Assistant">
+        Liz GC: The Rancher &amp; Kubernetes AI Assistant
+      </a>
+    </li>
+      <li>
+          <a href="introduction.html" title="简介" aria-label="简介">简介</a>
+      </li>
+  </ul>
+</nav>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <label class="visual-search-label-bc" for="search-input">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+          <input label="Search" aria-label="Search" id="search-input" type="text" placeholder="搜索文档"  autofocus>
+          <label class="filter checkbox" style="display: none">
+            <input type="checkbox" data-facet-filter="component:rancher-ai-gc" checked> Only this project
+          </label>
+        </div>
+      </div>
+</div>
+  <div class="content">
+<aside
+  class="toc sidebar"
+  data-title="在此页面上" data-levels="2">
+  <div class="toc-menu">
+    <div class="docsurvey-wrapper"><a class="survey-link" href="https://suselinux.fra1.qualtrics.com/jfe/form/SV_diCzHC9xxyJyuN0">Documentation survey</a></div>
+    <!-- start qualtrics -->
+    <div id='ZN_8qZUmklKYbBqAYe'><!--DO NOT REMOVE-CONTENTS PLACED HERE--></div>
+    <div id="qualtrics_container"></div>
+    <!-- end qualtrics -->
+  </div>
+</aside>
+
+<aside class="toc sidebar docsurvey-sidebar">
+  <div class="toc-menu">
+    <div class="docsurvey-wrapper"><a class="survey-link" href="https://suselinux.fra1.qualtrics.com/jfe/form/SV_diCzHC9xxyJyuN0">Documentation survey</a></div>
+  </div>
+</aside>
+<article class="doc">
+                    <h1 class="page">认识 Liz GC：Rancher &amp; Kubernetes AI 助手</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Liz GC 是一款上下文感知型 AI 智能体：既可以集成到 SUSE Rancher Prime 环境中，也可以不依赖 Rancher、独立为用户提供服务。与通用型 AI 不同，Liz GC 旨在理解集群、命名空间和工作负载的实时状态。</p>
+</div>
+<div class="paragraph">
+<p>Liz GC 既可作为 Rancher 扩展提供，也可作为不依赖 Rancher 的独立 UI 提供。无论采用哪种方式，它都相当于驻留在您的工作区中，随时为您提供所需的实时指导。无论您是在排查失败的部署，还是在理解新的 Rancher 与 Kubernetes 概念，Liz GC 都借助模型上下文协议 (MCP)，弥合运维数据与 LLM 生成的可操作建议之间的鸿沟。</p>
+</div>
+<div class="paragraph">
+<p>无论您需要的是站点可靠性工程师 (SRE) 的意见，还是 Rancher 与 Kubernetes 专家的帮助，Liz GC 都能提供有效参考，帮助您更快做出正确决策。Liz GC 的优势在于：不仅支持与 Rancher UI 集成，也支持不依赖 Rancher 的独立 UI，并具备适应企业安全要求的多种能力。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_关键组件"><a class="anchor" href="#_关键组件"></a>关键组件</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>AI 智能体</strong>: LLM 推理引擎与 MCP 服务（Rancher MCP 与 Kubernetes MCP）之间的领域专用桥梁。
+它将复杂请求分解并路由到安全的工具调用，同时强制执行安全防护措施。
+它确保上下文感知的执行，并将难懂的技术数据转化为清晰易懂的响应。
+它还提供统一的技术框架，同时支持独立 UI 和 Rancher UI 扩展。</p>
+</li>
+<li>
+<p><strong>Rancher MCP 服务</strong>: 该组件依赖于 Rancher，适用于使用 Rancher 的场景。它是负责与 Rancher API 交互的 Rancher 模型上下文协议 (MCP) 组件，通过 Rancher 公共 API 机制，并以多种定制工具对外提供能力，从而带来最佳用户体验。</p>
+</li>
+<li>
+<p><strong>Rancher UI 扩展</strong>: 该组件依赖于 Rancher，适用于使用 Rancher 的场景。它扩展 Rancher UI 以支持 Liz GC，不再局限于普通聊天窗口，而是将 Liz GC 嵌入 Rancher UI 的合适位置，并把助手集成到错误消息和状态徽章中，以提供即时的上下文支持。</p>
+</li>
+<li>
+<p><strong>Kubernetes MCP 服务</strong>: 该组件不依赖于 Rancher，适用于无法使用 Rancher 的场景。它是负责与 Kubernetes API 交互的 Kubernetes 模型上下文协议 (MCP) 组件，通过 Kubernetes 公共 API 机制，并参考 kubectl 能力实现了多种定制工具对外提供能力，从而带来最佳用户体验。</p>
+</li>
+<li>
+<p><strong>独立 UI 支持</strong>: 该组件不依赖于 Rancher，适用于无法使用 Rancher 的场景。它不仅提供与 Rancher 高度相似的权限管理能力，还提供以 kubeconfig 为核心的多集群管理能力，让未使用 Rancher 的用户也能友好地使用 Liz GC。</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_主要特征"><a class="anchor" href="#_主要特征"></a>主要特征</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_灵活的模型自主权"><a class="anchor" href="#_灵活的模型自主权"></a>灵活的模型自主权</h3>
+<div class="paragraph">
+<p>鉴于安全至关重要，Liz GC 允许您自由选择底层 AI 引擎。</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>通过 OpenAI 兼容的方式连接本地或隔离的 LLM，以实现最大程度的数据隐私。</p>
+</li>
+<li>
+<p>使用国内外主流公共引擎进行高性能推理，例如：</p>
+<div class="ulist">
+<ul>
+<li>
+<p>OpenAI 的 ChatGPT</p>
+</li>
+<li>
+<p>Google 的 Gemini</p>
+</li>
+<li>
+<p>阿里的 Qwen</p>
+</li>
+<li>
+<p>深度求索的 DeepSeek</p>
+</li>
+<li>
+<p>小米的 Mimo</p>
+</li>
+<li>
+<p>月之暗面的 Kimi</p>
+</li>
+<li>
+<p>智谱的 GLM</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_灵活的智能体定制权"><a class="anchor" href="#_灵活的智能体定制权"></a>灵活的智能体定制权</h3>
+<div class="paragraph">
+<p>不同团队面临的运维场景各不相同，Liz GC 允许您按需定制多个智能体，使其贴合各自的职责边界与工具链。</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>自定义智能体的名称与描述，便于在多智能体协作中识别职责。</p>
+</li>
+<li>
+<p>编写系统提示词，约束智能体的角色、回答风格与安全边界。</p>
+</li>
+<li>
+<p>按需配置智能体的 MCP 工具，只提供该智能体真正需要的能力。</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_为什么需要_ai_助手"><a class="anchor" href="#_为什么需要_ai_助手"></a>为什么需要 AI 助手？</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>随着 Kubernetes 环境规模的扩大，运维人员的“认知负担”呈指数级增长。Liz GC 旨在解决现代平台运维中的三个关键挑战：</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>缩小技能差距</strong>：Kubernetes 的学习曲线向来陡峭。Liz GC 为不熟悉特定资源或错误类型的工程师提供即时的专家级支持，从而减少对资深“英雄”工程师的依赖。</p>
+</li>
+<li>
+<p><strong>加速解决问题</strong>：运维人员无需再手动检查日志或搜索外部文档，即可请 Liz GC 总结命名空间的状态或解释特定故障，从而缩短平均故障解决时间 (MTTR)。</p>
+</li>
+<li>
+<p><strong>主动系统意识</strong>：Liz GC 支持主动运维。通过询问“哪些部署当前处于不健康状态？”或“总结此集群的运行状况”等问题，团队可以在问题升级为故障之前识别并修复，从而实现主动系统感知。</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="注意"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>虽然 Liz GC 是一个强大的助手，但它旨在扩展人类知识，而不是取代它。用户在应用建议的修复时，应验证 AI 的建议并遵循其组织的标准安全实践。</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="next"><a href="quick-start.html">快速入门</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+<script src="../../../_/js/vendor/lunr.js"></script>
+<script src="../../../_/js/vendor/lunr-languages.js"></script>
+<script src="../../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../../.." data-snippet-length="100" data-stylesheet="../../../_/css/search.css"></script>
+<script async src="../../../search-index.js"></script>
+<script src="../../../_/js/vendor/langSelection.js"></script>
+<script async src="../../../_/js/vendor/tabs.js"></script>
+
+
+<script src="../../../_/js/CNLanguageSwitcher.js"></script>
+  </body>
+</html>

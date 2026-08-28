@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+<title>故障排除 | Rancher &amp; Kubernetes AI  latest</title>
+    <link rel="prev" href="installation.html">
+    <meta name="description" content="故障排除">
+    <meta name="generator" content="Antora 3.1.10">
+    <link rel="stylesheet" href="../../../../_/css/site.css">
+<meta http-equiv="last-modified" content="2026-08-24"/>
+<link rel="stylesheet" href="../../../../_/css/search.css">
+<link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="../../../../_/css/font-styles.css">
+<link rel="stylesheet" href="../../../../_/fonts/css/all.css">
+<link rel="stylesheet" href="../../../../_/css/site-extra.css">
+<link rel="stylesheet" href="../../../../_/css/vendor/tabs.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&display=swap&family=SUSE+Mono:ital,wght@0,100..800;1,100..800" rel="stylesheet">
+<link rel="stylesheet" href="../../../../_/css/vendor/light.css">
+<script src="/docserv/res/lightheaded/analytics.js" type="text/javascript"></script>
+<script type="module">
+  import { defineCustomElements, setAssetPath } from 'https://d12w0ryu9hjsx8.cloudfront.net/shared-header/1.10/shared-header.esm.js';
+  defineCustomElements();
+  setAssetPath("https://d12w0ryu9hjsx8.cloudfront.net/shared-header/1.10/assets");
+</script>
+<!-- Default English link -->
+<link href="https://cnrancher.github.io/docs-liz-gc/rancher-ai-gc/latest/en/reference/troubleshooting.html" hreflang="x-default" rel="alternate"/>
+<!-- Link for the currently processed page -->
+<link href="https://cnrancher.github.io/docs-liz-gc/rancher-ai-gc/latest/zh/reference/troubleshooting.html" hrefLang="zh-CN" rel="alternate" />
+
+<!-- JSON-LD for doc metadata -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "name": "故障排除 | Liz GC: The Rancher &amp; Kubernetes AI Assistant latest",
+  "headline": "故障排除",
+  "description": "故障排除",
+  "inLanguage": "zh_CN",
+  "dateModified": "2026-08-24T00:00:00Z",
+  "author": {
+    "@type": "Organization",
+    "name": "SUSE Product & Solution Documentation Team",
+    "url": "https://documentation.suse.com"
+  },
+  "mentions": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "Liz GC: The Rancher &amp; Kubernetes AI Assistant",
+      "softwareVersion": "latest",
+      "applicationCategory": "Cloud Infrastructure",
+      "operatingSystem": "Linux"
+    }
+  ],
+  "publisher": {
+    "@type": "Organization",
+    "name": "SUSE",
+    "url": "https://documentation.suse.com",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.suse.com/assets/img/suse-white-logo-green.svg"
+    }
+  }
+}
+</script>
+<!-- end JSON-LD for doc metadata -->
+
+<!-- SUVA - Begin Ask Geeko-->
+<!--
+searchUnifyChatbot ("Ask Geeko") Copyright ©2024 Grazitti Interactive - All Rights Reserved. NOTICE: All information contained herein is, and remains the property of Grazitti Interactive and its suppliers, if any. The intellectual and technical concepts contained herein are proprietary to Grazitti Interactive and its suppliers and may be covered by India, U.S. and Foreign Patents, patents in process, and are protected by trade secret or copyright law. Dissemination of this information or reproduction of this material is strictly forbidden unless prior written permission is obtained from Grazitti Interactive.
+-->
+<meta content="width=device-width, initial-scale=1.0, user-scalable=yes" name="viewport"/>
+<script type="text/javascript" src="https://suse.searchunify.com/suva-resources/suva_clients_custom/c485cb3c-93d4-4942-99e8-91f3b8ca5636/Allow/an.js?c485cb3c-93d4-4942-99e8-91f3b8ca5636"></script>
+<script type="text/javascript" src="https://suse.searchunify.com/suva-resources/suva_clients_custom/c485cb3c-93d4-4942-99e8-91f3b8ca5636/js/index.js?q=gAAAAABp3JBN9VuEJTi5tFafLIMwgMkCPdJS3Qm56lSYx93ir3Twt9hgSvd3OHEt6-nYfSbY3yHq0Zv8PRPsSy4nbqZiaJ4cZvRc6ItVZdvwz9Urf35cH6OUyPOwdA0phlS-zVIznQ2rWW438p-91NlTHuxJuOFpnA=="></script>
+<link rel="stylesheet" href="https://suse.searchunify.com/suva-resources/suva_clients_custom/c485cb3c-93d4-4942-99e8-91f3b8ca5636/css/index.css">
+<div id="searchUnifyChatbot"></div>
+<!-- SUVA - End Ask Geeko-->
+<!--BEGIN QUALTRICS WEBSITE FEEDBACK SNIPPET-->
+<script type='text/javascript' src="../../../../_/js/qualtrics.js" defer></script>
+<!--END QUALTRICS WEBSITE FEEDBACK SNIPPET-->
+    <script>var uiRootPath = '../../../../_'</script>
+  </head>
+  <body class="article">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs'; mermaid.initialize({"startOnLoad":true});</script><shared-header
+language="en"
+languages='{
+    "en": { "label": "English", "url": "https://documentation.suse.com/en-us/" },
+    "de": { "label": "Deutsch", "url": "https://documentation.suse.com/de-de/" },
+    "fr": { "label": "Français", "url": "https://documentation.suse.com/fr-fr/" },
+    "es": { "label": "Español", "url": "https://documentation.suse.com/es-es/" },
+    "zh_CN": { "label": "中文", "url": "https://documentation.suse.com/zh-cn/" },
+    "pt_BR": { "label": "Português Brasileiro", "url": "https://documentation.suse.com/pt-br/" }
+}'
+enable-search='false'>
+</shared-header>
+<div class="body">
+<div class="nav-container" data-component="rancher-ai-gc" data-version="latest">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title">Rancher &amp; Kubernetes AI</h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../introduction.html">简介</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../quick-start.html">快速入门</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Toggle expand/collapse"></button>
+    <span class="nav-text">解释和概念</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../explanations/architecture.html">整体架构</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../explanations/models.html">LLM模型</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../explanations/shared-data.html">数据使用</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Toggle expand/collapse"></button>
+    <span class="nav-text">操作指南</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../how-tos/how-to-admin.html">管理员操作指南</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../how-tos/how-to-user.html">用户操作指南</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Toggle expand/collapse"></button>
+    <span class="nav-text">参考手册</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="installation.html">安装指南</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="troubleshooting.html">故障排查</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Rancher &amp; Kubernetes AI</span>
+    <span class="version">latest</span>
+  </div>
+  <ul class="components">
+        <li class="component is-current">
+          <div class="title"><a href="../introduction.html">Rancher & Kubernetes AI</a></div>
+          <ul class="versions">
+            <li class="version is-current is-latest">
+              <a href="../introduction.html">latest</a>
+            </li>
+          </ul>
+        </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+<ul>
+    <li>
+  <a class="home-link-dsc" href="https://cnrancher.github.io" title="SUSE Documentation Home" aria-label="SUSE Documentation Home"></a>
+    </li>
+    <li>
+      <a href="https://cnrancher.github.io/docs-liz-gc/rancher-ai-gc" title="Liz GC: The Rancher &amp; Kubernetes AI Assistant" aria-label="SUSE Documentation - Liz GC: The Rancher &amp; Kubernetes AI Assistant">
+        Liz GC: The Rancher &amp; Kubernetes AI Assistant
+      </a>
+    </li>
+      <li>
+          参考手册
+      </li>
+  </ul>
+</nav>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <label class="visual-search-label-bc" for="search-input">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+          <input label="Search" aria-label="Search" id="search-input" type="text" placeholder="搜索文档" >
+          <label class="filter checkbox" style="display: none">
+            <input type="checkbox" data-facet-filter="component:rancher-ai-gc" checked> Only this project
+          </label>
+        </div>
+      </div>
+</div>
+  <div class="content">
+<aside
+  class="toc sidebar"
+  data-title="在此页面上" data-levels="2">
+  <div class="toc-menu">
+    <div class="docsurvey-wrapper"><a class="survey-link" href="https://suselinux.fra1.qualtrics.com/jfe/form/SV_diCzHC9xxyJyuN0">Documentation survey</a></div>
+    <!-- start qualtrics -->
+    <div id='ZN_8qZUmklKYbBqAYe'><!--DO NOT REMOVE-CONTENTS PLACED HERE--></div>
+    <div id="qualtrics_container"></div>
+    <!-- end qualtrics -->
+  </div>
+</aside>
+
+<aside class="toc sidebar docsurvey-sidebar">
+  <div class="toc-menu">
+    <div class="docsurvey-wrapper"><a class="survey-link" href="https://suselinux.fra1.qualtrics.com/jfe/form/SV_diCzHC9xxyJyuN0">Documentation survey</a></div>
+  </div>
+</aside>
+<article class="doc">
+<h1 class="page">故障排除</h1>
+<div class="sect1">
+<h2 id="_快速故障排除"><a class="anchor" href="#_快速故障排除"></a>快速故障排除</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>AI 助手位于 local 集群的 kopilot-system 命名空间中。您可以访问 Agent 日志来了解任何问题。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl get po -n kopilot-system</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要获取 kopilot-agent pod 下 container <code>kopilot-runtime</code> 的日志：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl logs -n kopilot-system -l app=kopilot-agent -c kopilot-runtime</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>要获取 rancher-ai-mcp pod 的日志：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl logs -n kopilot-system -l app=rancher-mcp-server</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_启用_debug_日志"><a class="anchor" href="#_启用_debug_日志"></a>启用 DEBUG 日志</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>您可以在通过 Helm 部署 Agent 时，将 <code>agent.runtime.logLevel</code> 设置为 <code>DEBUG</code>，以启用 DEBUG 日志。</p>
+</div>
+<div class="paragraph">
+<p>更新 values.yaml</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">...
+agent:
+  runtime:
+    logLevel: DEBUG
+...</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>更新 Helm Chart:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">helm upgrade --install \
+    -n kopilot-system \
+    --create-namespace \
+    -f values.yaml \
+    kopilot ./kopilot-0.6.0.tgz</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_在_extensions_可用列表中看不到_suse_ai_assistant_gc"><a class="anchor" href="#_在_extensions_可用列表中看不到_suse_ai_assistant_gc"></a>在 Extensions 可用列表中看不到 SUSE AI Assistant GC</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>导入 Extension Catalog 后，返回 Extensions 页面，在可用列表中仍然看不到 <code>SUSE AI Assistant GC</code>。</p>
+</div>
+<div class="paragraph">
+<p>您可以进入 Local 集群 &#8594; Apps &#8594; Repositories 页面，查看 <code>ui-extension-kopilot-ai-ui-charts</code> 的状态。</p>
+</div>
+<div class="paragraph">
+<p>如果该 Repository 未处于 Active 状态，请点击下拉菜单中的 <strong>Refresh</strong>，直到该 Repository 变为 Active。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../_images/quick-start/quick_start_4.png" alt="Repositories 列表页面">
+</div>
+</div>
+<div class="paragraph">
+<p>再次返回 Extensions 页面，即可看到 <code>SUSE AI Assistant GC</code>。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_更新模型配置"><a class="anchor" href="#_更新模型配置"></a>更新模型配置</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>模型配置存储在 <code>kopilot-llm-config</code> Secret 中。如果您通过 Settings 页面修改了模型配置，这些修改会直接保存到该 Secret。</p>
+</div>
+<div class="paragraph">
+<p>默认情况下，执行 Helm upgrade 时不会覆盖现有的 <code>kopilot-llm-config</code> Secret：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">llm:
+  # When false (default), helm upgrade keeps an existing kopilot-llm-config Secret
+  # (e.g. after UI edits). Set true to overwrite it from these values.
+  forceUpdate: false</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>因此，如果您已经通过 Settings 页面配置了模型，修改 <code>values.yaml</code> 中的模型配置后执行 Helm upgrade，<strong>默认不会覆盖现有的模型配置</strong>。</p>
+</div>
+<div class="paragraph">
+<p>如果希望使用 <code>values.yaml</code> 中的配置覆盖现有的 <code>kopilot-llm-config</code> Secret，请将 <code>llm.forceUpdate</code> 设置为 <code>true</code>：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">llm:
+  forceUpdate: true</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="注意"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>如果您通过 Settings 页面配置了模型，请在更新之前，将所需的模型配置同步到 <code>values.yaml</code> 中，并设置 <code>llm.forceUpdate: true</code>，以确保 Helm upgrade 使用 <code>values.yaml</code> 中的配置覆盖现有的 <code>kopilot-llm-config</code> Secret。</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_使用_ingress_nginx_时出现_missing_user_header_错误"><a class="anchor" href="#_使用_ingress_nginx_时出现_missing_user_header_错误"></a>使用 Ingress NGINX 时出现 <code>missing user header</code> 错误</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>在本地 RKE2 集群中，如果使用 Ingress NGINX，访问相关服务时可能出现以下错误：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-text hljs" data-lang="text">{ "type": "error", "links": {}, "code": "InvalidBodyContent", "message": "invalid request, missing user header", "status": 422 }</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_原因"><a class="anchor" href="#_原因"></a>原因</h3>
+<div class="paragraph">
+<p>Ingress NGINX 默认情况下会忽略包含下划线的请求头，导致服务端无法获取所需的用户信息，从而返回 <code>422</code> 错误。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_解决方法"><a class="anchor" href="#_解决方法"></a>解决方法</h3>
+<div class="paragraph">
+<p>在 <code>rke2-ingress-nginx-controller</code> ConfigMap 中启用下划线请求头支持：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl patch configmap rke2-ingress-nginx-controller -n kube-system \
+  --type merge \
+  -p '{"data":{"enable-underscores-in-headers":"true"}}'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>配置修改后会立即生效，无需重启 Ingress NGINX Controller。</p>
+</div>
+<div class="paragraph">
+<p>您可以使用以下命令确认配置是否已生效：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl get configmap rke2-ingress-nginx-controller -n kube-system \
+  -o jsonpath='{.data.enable-underscores-in-headers}'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>预期输出：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-text hljs" data-lang="text">true</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_使用过程中页面自动退出登录"><a class="anchor" href="#_使用过程中页面自动退出登录"></a>使用过程中页面自动退出登录</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>在使用 Rancher AI GC 的过程中，页面可能会自动退出登录，并出现以下错误：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-text hljs" data-lang="text">{"Code":{"Code": "Unauthorized", "Status": 401}, "Message": "must authenticate","Cause": null, "FieldName": ""}</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_原因_2"><a class="anchor" href="#_原因_2"></a>原因</h3>
+<div class="paragraph">
+<p>如果 <code>values.yaml</code> 中缺少 <code>rancher_sso</code> 配置，Agent 无法正确获取或验证 Rancher 的认证信息，从而导致请求返回 <code>401 Unauthorized</code>，页面自动退出登录。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_解决方法_2"><a class="anchor" href="#_解决方法_2"></a>解决方法</h3>
+<div class="paragraph">
+<p>在 <code>values.yaml</code> 中配置 Rancher SSO：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">rancher_sso:
+  enabled: true
+  url: "https://rancher.mycompany.com"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>将 <code>url</code> 设置为 Rancher Server 的实际访问地址。</p>
+</div>
+<div class="paragraph">
+<p>修改 <code>values.yaml</code> 后重新执行 Helm upgrade，使配置生效。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_访问_liz_gc_ui_重定向次数过多无法访问"><a class="anchor" href="#_访问_liz_gc_ui_重定向次数过多无法访问"></a>访问 Liz GC UI 重定向次数过多，无法访问</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>使用外部负载均衡器上终止 TLS 的方式部署 Liz GC，访问其 UI 时出现了重定向次数过多，无法进入页面的问题。</p>
+</div>
+<div class="sect2">
+<h3 id="_原因_3"><a class="anchor" href="#_原因_3"></a>原因</h3>
+<div class="paragraph">
+<p>Liz GC 所在集群的 ingress 控制器未启用与外部 TLS 的转发头机制。如果不设置此选项，外部 LB 将不断响应来自入口控制器的重定向请求。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_解决方法_3"><a class="anchor" href="#_解决方法_3"></a>解决方法</h3>
+<div class="paragraph">
+<p>集群中的 ingress 控制器开启 forwarded header 选项。</p>
+</div>
+<div class="sect3">
+<h4 id="_ingress_nginx"><a class="anchor" href="#_ingress_nginx"></a>Ingress Nginx</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: rke2-ingress-nginx
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    controller:
+      config:
+        use-forwarded-headers: "true"</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_traefik"><a class="anchor" href="#_traefik"></a>Traefik</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: traefik
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    additionalArguments:
+      - "--entryPoints.web.proxyProtocol.insecure"
+      - "--entryPoints.web.forwardedHeaders.insecure"</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="installation.html">安装指南</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<script src="../../../../_/js/site.js"></script>
+<script async src="../../../../_/js/vendor/highlight.js"></script>
+<script src="../../../../_/js/vendor/lunr.js"></script>
+<script src="../../../../_/js/vendor/lunr-languages.js"></script>
+<script src="../../../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../../../.." data-snippet-length="100" data-stylesheet="../../../../_/css/search.css"></script>
+<script async src="../../../../search-index.js"></script>
+<script src="../../../../_/js/vendor/langSelection.js"></script>
+<script async src="../../../../_/js/vendor/tabs.js"></script>
+
+
+<script src="../../../../_/js/CNLanguageSwitcher.js"></script>
+  </body>
+</html>

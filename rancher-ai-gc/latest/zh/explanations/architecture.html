@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+<title>整体架构 | Rancher &amp; Kubernetes AI  latest</title>
+    <link rel="prev" href="../quick-start.html">
+    <link rel="next" href="models.html">
+    <meta name="description" content="对 Liz GC：Rancher &amp; Kubernetes AI 助手 的多智能体架构的介绍。">
+    <meta name="generator" content="Antora 3.1.10">
+    <link rel="stylesheet" href="../../../../_/css/site.css">
+<meta http-equiv="last-modified" content="2026-08-23"/>
+<link rel="stylesheet" href="../../../../_/css/search.css">
+<link rel="icon" href="../../../../_/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="../../../../_/css/font-styles.css">
+<link rel="stylesheet" href="../../../../_/fonts/css/all.css">
+<link rel="stylesheet" href="../../../../_/css/site-extra.css">
+<link rel="stylesheet" href="../../../../_/css/vendor/tabs.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&display=swap&family=SUSE+Mono:ital,wght@0,100..800;1,100..800" rel="stylesheet">
+<link rel="stylesheet" href="../../../../_/css/vendor/light.css">
+<script src="/docserv/res/lightheaded/analytics.js" type="text/javascript"></script>
+<script type="module">
+  import { defineCustomElements, setAssetPath } from 'https://d12w0ryu9hjsx8.cloudfront.net/shared-header/1.10/shared-header.esm.js';
+  defineCustomElements();
+  setAssetPath("https://d12w0ryu9hjsx8.cloudfront.net/shared-header/1.10/assets");
+</script>
+<!-- Default English link -->
+<link href="https://cnrancher.github.io/docs-liz-gc/rancher-ai-gc/latest/en/explanations/architecture.html" hreflang="x-default" rel="alternate"/>
+<!-- Link for the currently processed page -->
+<link href="https://cnrancher.github.io/docs-liz-gc/rancher-ai-gc/latest/zh/explanations/architecture.html" hrefLang="zh-CN" rel="alternate" />
+
+<!-- JSON-LD for doc metadata -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "name": "整体架构 | Liz GC: The Rancher &amp; Kubernetes AI Assistant latest",
+  "headline": "整体架构",
+  "description": "对 Liz GC：Rancher &amp;amp; Kubernetes AI 助手 的多智能体架构的介绍。",
+  "inLanguage": "zh_CN",
+  "dateModified": "2026-08-23T00:00:00Z",
+  "author": {
+    "@type": "Organization",
+    "name": "SUSE Product & Solution Documentation Team",
+    "url": "https://documentation.suse.com"
+  },
+  "mentions": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "Liz GC: The Rancher &amp; Kubernetes AI Assistant",
+      "softwareVersion": "latest",
+      "applicationCategory": "Cloud Infrastructure",
+      "operatingSystem": "Linux"
+    }
+  ],
+  "publisher": {
+    "@type": "Organization",
+    "name": "SUSE",
+    "url": "https://documentation.suse.com",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.suse.com/assets/img/suse-white-logo-green.svg"
+    }
+  }
+}
+</script>
+<!-- end JSON-LD for doc metadata -->
+
+<!-- SUVA - Begin Ask Geeko-->
+<!--
+searchUnifyChatbot ("Ask Geeko") Copyright ©2024 Grazitti Interactive - All Rights Reserved. NOTICE: All information contained herein is, and remains the property of Grazitti Interactive and its suppliers, if any. The intellectual and technical concepts contained herein are proprietary to Grazitti Interactive and its suppliers and may be covered by India, U.S. and Foreign Patents, patents in process, and are protected by trade secret or copyright law. Dissemination of this information or reproduction of this material is strictly forbidden unless prior written permission is obtained from Grazitti Interactive.
+-->
+<meta content="width=device-width, initial-scale=1.0, user-scalable=yes" name="viewport"/>
+<script type="text/javascript" src="https://suse.searchunify.com/suva-resources/suva_clients_custom/c485cb3c-93d4-4942-99e8-91f3b8ca5636/Allow/an.js?c485cb3c-93d4-4942-99e8-91f3b8ca5636"></script>
+<script type="text/javascript" src="https://suse.searchunify.com/suva-resources/suva_clients_custom/c485cb3c-93d4-4942-99e8-91f3b8ca5636/js/index.js?q=gAAAAABp3JBN9VuEJTi5tFafLIMwgMkCPdJS3Qm56lSYx93ir3Twt9hgSvd3OHEt6-nYfSbY3yHq0Zv8PRPsSy4nbqZiaJ4cZvRc6ItVZdvwz9Urf35cH6OUyPOwdA0phlS-zVIznQ2rWW438p-91NlTHuxJuOFpnA=="></script>
+<link rel="stylesheet" href="https://suse.searchunify.com/suva-resources/suva_clients_custom/c485cb3c-93d4-4942-99e8-91f3b8ca5636/css/index.css">
+<div id="searchUnifyChatbot"></div>
+<!-- SUVA - End Ask Geeko-->
+<!--BEGIN QUALTRICS WEBSITE FEEDBACK SNIPPET-->
+<script type='text/javascript' src="../../../../_/js/qualtrics.js" defer></script>
+<!--END QUALTRICS WEBSITE FEEDBACK SNIPPET-->
+    <script>var uiRootPath = '../../../../_'</script>
+  </head>
+  <body class="article">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs'; mermaid.initialize({"startOnLoad":true});</script><shared-header
+language="en"
+languages='{
+    "en": { "label": "English", "url": "https://documentation.suse.com/en-us/" },
+    "de": { "label": "Deutsch", "url": "https://documentation.suse.com/de-de/" },
+    "fr": { "label": "Français", "url": "https://documentation.suse.com/fr-fr/" },
+    "es": { "label": "Español", "url": "https://documentation.suse.com/es-es/" },
+    "zh_CN": { "label": "中文", "url": "https://documentation.suse.com/zh-cn/" },
+    "pt_BR": { "label": "Português Brasileiro", "url": "https://documentation.suse.com/pt-br/" }
+}'
+enable-search='false'>
+</shared-header>
+<div class="body">
+<div class="nav-container" data-component="rancher-ai-gc" data-version="latest">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title">Rancher &amp; Kubernetes AI</h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../introduction.html">简介</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../quick-start.html">快速入门</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Toggle expand/collapse"></button>
+    <span class="nav-text">解释和概念</span>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="architecture.html">整体架构</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="models.html">LLM模型</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="shared-data.html">数据使用</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Toggle expand/collapse"></button>
+    <span class="nav-text">操作指南</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../how-tos/how-to-admin.html">管理员操作指南</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../how-tos/how-to-user.html">用户操作指南</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle" aria-label="Toggle expand/collapse"></button>
+    <span class="nav-text">参考手册</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../reference/installation.html">安装指南</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../reference/troubleshooting.html">故障排查</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Rancher &amp; Kubernetes AI</span>
+    <span class="version">latest</span>
+  </div>
+  <ul class="components">
+        <li class="component is-current">
+          <div class="title"><a href="../introduction.html">Rancher & Kubernetes AI</a></div>
+          <ul class="versions">
+            <li class="version is-current is-latest">
+              <a href="../introduction.html">latest</a>
+            </li>
+          </ul>
+        </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+<ul>
+    <li>
+  <a class="home-link-dsc" href="https://cnrancher.github.io" title="SUSE Documentation Home" aria-label="SUSE Documentation Home"></a>
+    </li>
+    <li>
+      <a href="https://cnrancher.github.io/docs-liz-gc/rancher-ai-gc" title="Liz GC: The Rancher &amp; Kubernetes AI Assistant" aria-label="SUSE Documentation - Liz GC: The Rancher &amp; Kubernetes AI Assistant">
+        Liz GC: The Rancher &amp; Kubernetes AI Assistant
+      </a>
+    </li>
+      <li>
+          解释和概念
+      </li>
+  </ul>
+</nav>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <label class="visual-search-label-bc" for="search-input">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+          <input label="Search" aria-label="Search" id="search-input" type="text" placeholder="搜索文档" >
+          <label class="filter checkbox" style="display: none">
+            <input type="checkbox" data-facet-filter="component:rancher-ai-gc" checked> Only this project
+          </label>
+        </div>
+      </div>
+</div>
+  <div class="content">
+<aside
+  class="toc sidebar"
+  data-title="在此页面上" data-levels="2">
+  <div class="toc-menu">
+    <div class="docsurvey-wrapper"><a class="survey-link" href="https://suselinux.fra1.qualtrics.com/jfe/form/SV_diCzHC9xxyJyuN0">Documentation survey</a></div>
+    <!-- start qualtrics -->
+    <div id='ZN_8qZUmklKYbBqAYe'><!--DO NOT REMOVE-CONTENTS PLACED HERE--></div>
+    <div id="qualtrics_container"></div>
+    <!-- end qualtrics -->
+  </div>
+</aside>
+
+<aside class="toc sidebar docsurvey-sidebar">
+  <div class="toc-menu">
+    <div class="docsurvey-wrapper"><a class="survey-link" href="https://suselinux.fra1.qualtrics.com/jfe/form/SV_diCzHC9xxyJyuN0">Documentation survey</a></div>
+  </div>
+</aside>
+<article class="doc">
+<h1 class="page">整体架构</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>该系统被设计为一个<strong>分层多智能体生态系统</strong>。它使用一个<strong>中央智能体（Supervisor Agent）</strong> 跨多个<strong>专用 AI 智能体</strong>来编排和调度请求，每个智能体都连接到一个或多个<strong> MCP（模型上下文协议）服务</strong>。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_核心组件"><a class="anchor" href="#_核心组件"></a>核心组件</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_中央智能体"><a class="anchor" href="#_中央智能体"></a>中央智能体</h3>
+<div class="paragraph">
+<p>中央智能体（Supervisor Agent）是系统的入口点和用户体验的协调器。中央智能体并不是直接执行每个技术任务，而是充当一个<strong>智能路由器</strong>。</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>分析用户的问题以确定所需的域（例如安全、配置或持续交付）。</p>
+</li>
+<li>
+<p>查阅 SubAgentConfig 元数据来选择最适合任务的专用智能体去完成任务。</p>
+</li>
+<li>
+<p>在 Rancher UI 中，可以跟踪用户的位置，并确保相关集群、命名空间和资源元数据传递到下游智能体以提供“上下文感知”的响应。</p>
+</li>
+<li>
+<p>在独立 UI 中，可以选择用户要操作的集群，或者在用户问题中指定相关集群、命名空间和资源元数据传递到下游智能体以提供“上下文感知”的响应。</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_专用智能体团队"><a class="anchor" href="#_专用智能体团队"></a>专用智能体团队</h3>
+<div class="paragraph">
+<p>专用智能体团队（Specialized Agent Crew）是系统的主力。每个智能体都是其特定领域智能的编排者，它使用大型语言模型（LLM）作为推理引擎，而其本身负责提供动作的结构、协调和安全执行。</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>大语言模型（推理引擎）</strong>：</p>
+<div class="ulist">
+<ul>
+<li>
+<p>解释以自然语言表达的用户输入。</p>
+</li>
+<li>
+<p>执行推理：将复杂的请求分解为更小的步骤。</p>
+</li>
+<li>
+<p>决定接下来应该发生什么（继续推理还是采取行动）。</p>
+</li>
+<li>
+<p>将工具的输出总结输出为清晰、易于人类理解的回答。</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>智能体（编排者）</strong>：</p>
+<div class="ulist">
+<ul>
+<li>
+<p>用 ReAct（推理 + 行动）模式包装大语言模型。</p>
+</li>
+<li>
+<p>决定何时让大语言模型继续推理或何时按照其指示采取行动。</p>
+</li>
+<li>
+<p>按照大语言模型的指示调用外部工具（通过 MCP 服务）。</p>
+</li>
+<li>
+<p>通过将用户的 Token 传递到 MCP 服务器进行身份验证和鉴权，确保安全交互。</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_mcp_服务"><a class="anchor" href="#_mcp_服务"></a>MCP 服务</h3>
+<div class="paragraph">
+<p>MCP 服务充当 ReAct 智能体 与 Rancher 和 Kubernetes API 之间的安全受控网关。其功能包括：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>暴露工具</strong>：它提供一组定义明确、安全的工具（API 端点），供 ReAct Agent 调用。这些工具抽象化了直接与 Rancher/Kubernetes API 交互的复杂性。</p>
+</li>
+<li>
+<p><strong>与 Rancher 交互</strong>：它将来自智能体的工具调用转换为发送至 Rancher 管理服务器的相应 API 请求，并根据需要检索或修改资源。</p>
+</li>
+<li>
+<p><strong>与 Kubernetes 交互</strong>：它将来自智能体的工具调用转换为发送至 Kubernetes 管理服务器的相应 API 请求，并根据需要检索或修改资源。</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rancher_ui_扩展_独立_ui"><a class="anchor" href="#_rancher_ui_扩展_独立_ui"></a>Rancher UI 扩展 / 独立 UI</h3>
+<div class="paragraph">
+<p>在 Rancher UI 和 独立 UI 中都提供面向用户的聊天界面，它旨在无缝融入 Rancher/Kubernetes 用户体验，其功能包括：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>用户输入</strong>：它捕获用户查询并将其发送给 ReAct 智能体。</p>
+</li>
+<li>
+<p><strong>显示回复</strong>：它接收来自 ReAct 智能体的回复，并以聊天格式呈现。除了正常的文本消息回复，还会根据回复内容提供如资源跳转、YAML展示、YAML变化展示和建议展示等多种可视化 UI 功能的支持。</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_工作原理流程"><a class="anchor" href="#_工作原理流程"></a>工作原理（流程）</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>用户提问</strong>：用户通过 UI 提交问题。</p>
+</li>
+<li>
+<p><strong>中央智能体路由</strong>：中央智能体（Supervisor Agent）通过 LLM 确定意图并将拆解后的问题以及 UI 上下文路由到专用智能体（例如，Rancher 智能体）。</p>
+</li>
+<li>
+<p><strong>LLM 推理</strong>：专用智能体的 LLM 负责解释请求、推理问题，并提出行动计划。</p>
+</li>
+<li>
+<p><strong>专用智能体执行</strong>：如果计划需要外部操作，智能体将使用用户的 Token 调用合适的 MCP 服务工具。</p>
+</li>
+<li>
+<p><strong>专用智能体响应</strong>：LLM 总结智能体内的工具的所有输出并制定连贯的、人类可读的响应返回给中央智能体。</p>
+</li>
+<li>
+<p><strong>最终响应</strong>：中央智能体（Supervisor Agent）综合所有智能体的回答做总结后形成最终回答，然后传送回 UI 给用户看。</p>
+</li>
+</ol>
+</div>
+<div class="imageblock"><div class="mermaid content" style=" ">graph TB
+
+User["User Question"] --> UI["Liz GC UI"]
+UI <--> Liz["Liz GC Supervisor"]
+
+Liz <--> A1["Rancher Agent"]
+Liz <--> A2["Fleet Agent"]
+Liz <--> A3["Provisioning Agent"]
+Liz <--> A4["Kubernetes Agent"]
+Liz <--> A5["Helm Agent"]
+Liz <--> A6["App Collection Agent"]
+Liz <--> A7["Observability Agent"]
+Liz <--> A8["Security Agent"]
+Liz <--> A9["Custom Agent"]
+
+A1 <--> M1["Rancher MCP"]
+A2 <--> M1
+A3 <--> M1
+A4 <--> M2["Kubernetes MCP"]
+A5 <--> M3["Helm MCP"]
+A6 <--> M4["App Collection MCP"]
+A7 <--> M5["Observability MCP"]
+A8 <--> M6["Security MCP"]
+A9 <--> M7["Third-party MCP"]
+
+M1 <--> D1[("Rancher/K8s API")]
+M2 <--> D2[("Kubernetes API")]
+M3 <--> D3[("Helm Chart API")]
+M4 <--> D4[("App Collection API")]
+M5 <--> D5[("Observability/Metrics")]
+M6 <--> D6[("Security/CVE Scans")]
+M7 <--> D7[("External System")]
+
+%% LLM 连线
+Liz <-.->|"Supervisor->LLM"| LLM["Public/Private LLM"]
+A1 <-.-> LLM
+A2 <-.-> LLM
+A3 <-.-> LLM
+A4 <-.-> LLM
+A5 <-.-> LLM
+A6 <-.-> LLM
+A7 <-.-> LLM
+A8 <-.-> LLM
+A9 <-.-> LLM
+
+style Liz fill:#FF6B6B,stroke:#C92A2A,stroke-width:3px,color:#fff
+style LLM fill:#FFD93D,stroke:#F59F00,stroke-width:2px,stroke-dasharray:5 5,color:#000
+style User fill:#4ECDC4,stroke:#0B8B7D,stroke-width:2px,color:#fff
+style UI fill:#4ECDC4,stroke:#0B8B7D,stroke-width:2px,color:#fff
+style A1 fill:#6BCB77,stroke:#2B8A3E,stroke-width:2px,color:#fff
+style A2 fill:#6BCB77,stroke:#2B8A3E,stroke-width:2px,color:#fff
+style A3 fill:#6BCB77,stroke:#2B8A3E,stroke-width:2px,color:#fff
+style A4 fill:#6BCB77,stroke:#2B8A3E,stroke-width:2px,color:#fff
+style A5 fill:#6BCB77,stroke:#2B8A3E,stroke-width:2px,color:#fff
+style A6 fill:#6BCB77,stroke:#2B8A3E,stroke-width:2px,color:#fff
+style A7 fill:#6BCB77,stroke:#2B8A3E,stroke-width:2px,color:#fff
+style A8 fill:#6BCB77,stroke:#2B8A3E,stroke-width:2px,color:#fff
+style A9 fill:#6BCB77,stroke:#2B8A3E,stroke-width:2px,color:#fff
+style M1 fill:#4DABF7,stroke:#1C7ED6,stroke-width:2px,color:#fff
+style M2 fill:#4DABF7,stroke:#1C7ED6,stroke-width:2px,color:#fff
+style M3 fill:#4DABF7,stroke:#1C7ED6,stroke-width:2px,color:#fff
+style M4 fill:#4DABF7,stroke:#1C7ED6,stroke-width:2px,color:#fff
+style M5 fill:#4DABF7,stroke:#1C7ED6,stroke-width:2px,color:#fff
+style M6 fill:#4DABF7,stroke:#1C7ED6,stroke-width:2px,color:#fff
+style M7 fill:#4DABF7,stroke:#1C7ED6,stroke-width:2px,color:#fff
+style D1 fill:#9B6FA3,stroke:#7B4F83,stroke-width:2px,color:#fff
+style D2 fill:#9B6FA3,stroke:#7B4F83,stroke-width:2px,color:#fff
+style D3 fill:#9B6FA3,stroke:#7B4F83,stroke-width:2px,color:#fff
+style D4 fill:#9B6FA3,stroke:#7B4F83,stroke-width:2px,color:#fff
+style D5 fill:#9B6FA3,stroke:#7B4F83,stroke-width:2px,color:#fff
+style D6 fill:#9B6FA3,stroke:#7B4F83,stroke-width:2px,color:#fff
+style D7 fill:#9B6FA3,stroke:#7B4F83,stroke-width:2px,color:#fff</div></div>
+<style>
+.doc .mermaid {
+  cursor: zoom-in;
+}
+.doc .mermaid svg {
+  user-select: none;
+}
+.mermaid-lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 10050;
+  background: rgba(20, 20, 20, 0.72);
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+.mermaid-lightbox.is-open {
+  display: flex;
+}
+.mermaid-lightbox__panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 8px;
+  width: 96vw;
+  height: 94vh;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+}
+.mermaid-lightbox__toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 2.75rem 0.5rem 0.75rem;
+  border-bottom: 1px solid #eee;
+  flex-shrink: 0;
+}
+.mermaid-lightbox__toolbar button {
+  border: 1px solid #ccc;
+  background: #f7f7f7;
+  border-radius: 4px;
+  min-width: 2rem;
+  height: 1.8rem;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+}
+.mermaid-lightbox__zoom {
+  min-width: 3.5rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #555;
+}
+.mermaid-lightbox__hint {
+  margin-left: 0.35rem;
+  font-size: 0.8rem;
+  color: #888;
+}
+.mermaid-lightbox__close {
+  position: absolute;
+  top: 0.3rem;
+  right: 0.6rem;
+  border: 0;
+  background: transparent;
+  font-size: 1.75rem;
+  line-height: 1;
+  cursor: pointer;
+  color: #333;
+  z-index: 1;
+}
+.mermaid-lightbox__viewport {
+  flex: 1;
+  overflow: hidden;
+  cursor: grab;
+  position: relative;
+  background: #fafafa;
+}
+.mermaid-lightbox__viewport.is-dragging {
+  cursor: grabbing;
+}
+.mermaid-lightbox__stage {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 0 0;
+  user-select: none;
+}
+.mermaid-lightbox__stage svg {
+  display: block;
+  max-width: none !important;
+  width: min(1200px, 80vw);
+  height: auto;
+  pointer-events: none;
+}
+</style>
+<script>
+(function () {
+  var MIN = 0.4;
+  var MAX = 5;
+  var STEP = 0.05;
+
+  function ready(fn) {
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn);
+    else fn();
+  }
+
+  ready(function () {
+    var overlay = document.createElement('div');
+    overlay.className = 'mermaid-lightbox';
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+    overlay.innerHTML =
+      '<div class="mermaid-lightbox__panel">' +
+        '<button type="button" class="mermaid-lightbox__close" aria-label="关闭">×</button>' +
+        '<div class="mermaid-lightbox__toolbar">' +
+          '<button type="button" data-zoom="-">−</button>' +
+          '<span class="mermaid-lightbox__zoom">100%</span>' +
+          '<button type="button" data-zoom="+">+</button>' +
+          '<button type="button" data-zoom="reset">重置</button>' +
+          '<span class="mermaid-lightbox__hint">滚轮缩放，拖动查看</span>' +
+        '</div>' +
+        '<div class="mermaid-lightbox__viewport">' +
+          '<div class="mermaid-lightbox__stage"></div>' +
+        '</div>' +
+      '</div>';
+    document.body.appendChild(overlay);
+
+    var viewport = overlay.querySelector('.mermaid-lightbox__viewport');
+    var stage = overlay.querySelector('.mermaid-lightbox__stage');
+    var zoomLabel = overlay.querySelector('.mermaid-lightbox__zoom');
+    var closeBtn = overlay.querySelector('.mermaid-lightbox__close');
+    var state = { scale: 1, x: 0, y: 0, dragging: false, lastX: 0, lastY: 0 };
+
+    function apply() {
+      stage.style.transform = 'translate(' + state.x + 'px, ' + state.y + 'px) scale(' + state.scale + ')';
+      zoomLabel.textContent = Math.round(state.scale * 100) + '%';
+    }
+
+    function setScale(next, cx, cy) {
+      next = Math.min(MAX, Math.max(MIN, next));
+      if (typeof cx === 'number') {
+        var ratio = next / state.scale;
+        state.x = cx - (cx - state.x) * ratio;
+        state.y = cy - (cy - state.y) * ratio;
+      }
+      state.scale = next;
+      apply();
+    }
+
+    function center() {
+      state.scale = 1;
+      var sw = stage.offsetWidth;
+      var sh = stage.offsetHeight;
+      state.x = Math.max(0, (viewport.clientWidth - sw) / 2);
+      state.y = Math.max(0, (viewport.clientHeight - sh) / 2);
+      apply();
+    }
+
+    function close() {
+      overlay.classList.remove('is-open');
+      document.body.style.overflow = '';
+      stage.innerHTML = '';
+    }
+
+    function open(svg) {
+      stage.innerHTML = '';
+      var clone = svg.cloneNode(true);
+      clone.removeAttribute('width');
+      clone.removeAttribute('height');
+      stage.appendChild(clone);
+      overlay.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+      requestAnimationFrame(center);
+    }
+
+    function bind(el) {
+      if (el.dataset.lightboxBound) return;
+      var svg = el.querySelector('svg');
+      if (!svg) return;
+      el.dataset.lightboxBound = 'true';
+      el.setAttribute('title', '单击放大');
+      el.addEventListener('click', function (e) {
+        e.preventDefault();
+        var sel = window.getSelection();
+        if (sel) sel.removeAllRanges();
+        open(svg);
+      });
+    }
+
+    function tryBind() {
+      document.querySelectorAll('.doc .mermaid').forEach(bind);
+    }
+
+    overlay.querySelector('[data-zoom="-"]').addEventListener('click', function () {
+      setScale(state.scale - STEP, viewport.clientWidth / 2, viewport.clientHeight / 2);
+    });
+    overlay.querySelector('[data-zoom="+"]').addEventListener('click', function () {
+      setScale(state.scale + STEP, viewport.clientWidth / 2, viewport.clientHeight / 2);
+    });
+    overlay.querySelector('[data-zoom="reset"]').addEventListener('click', center);
+
+    viewport.addEventListener('wheel', function (e) {
+      e.preventDefault();
+      var rect = viewport.getBoundingClientRect();
+      setScale(state.scale + (e.deltaY > 0 ? -STEP : STEP), e.clientX - rect.left, e.clientY - rect.top);
+    }, { passive: false });
+
+    viewport.addEventListener('pointerdown', function (e) {
+      if (e.button !== 0) return;
+      state.dragging = true;
+      state.lastX = e.clientX;
+      state.lastY = e.clientY;
+      viewport.classList.add('is-dragging');
+      viewport.setPointerCapture(e.pointerId);
+    });
+    viewport.addEventListener('pointermove', function (e) {
+      if (!state.dragging) return;
+      state.x += e.clientX - state.lastX;
+      state.y += e.clientY - state.lastY;
+      state.lastX = e.clientX;
+      state.lastY = e.clientY;
+      apply();
+    });
+    function endDrag() {
+      state.dragging = false;
+      viewport.classList.remove('is-dragging');
+    }
+    viewport.addEventListener('pointerup', endDrag);
+    viewport.addEventListener('pointercancel', endDrag);
+
+    closeBtn.addEventListener('click', close);
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) close();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') close();
+    });
+
+    tryBind();
+    var root = document.querySelector('.doc') || document.body;
+    new MutationObserver(tryBind).observe(root, { childList: true, subtree: true });
+  });
+})();
+</script>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="../quick-start.html">快速入门</a></span>
+  <span class="next"><a href="models.html">LLM模型</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<script src="../../../../_/js/site.js"></script>
+<script async src="../../../../_/js/vendor/highlight.js"></script>
+<script src="../../../../_/js/vendor/lunr.js"></script>
+<script src="../../../../_/js/vendor/lunr-languages.js"></script>
+<script src="../../../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../../../.." data-snippet-length="100" data-stylesheet="../../../../_/css/search.css"></script>
+<script async src="../../../../search-index.js"></script>
+<script src="../../../../_/js/vendor/langSelection.js"></script>
+<script async src="../../../../_/js/vendor/tabs.js"></script>
+
+
+<script src="../../../../_/js/CNLanguageSwitcher.js"></script>
+  </body>
+</html>
